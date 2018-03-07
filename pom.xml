@@ -23,7 +23,7 @@
             <groupId>de.ddkfm.hcloud</groupId>
             <artifactId>hcloud-kotlin</artifactId>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/hcloud-kotlin-1.0-SNAPSHOT-jar-with-dependencies.jar</systemPath>
+            <systemPath>${project.basedir}/lib/hcloud-kotlin-1.0-jar-with-dependencies.jar</systemPath>
         </dependency>
     </dependencies>
 </project>
