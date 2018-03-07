@@ -48,22 +48,21 @@ fun main(args : Array<String>) {
                 ModelAndView(model, "templates/dashboard.vm")
         )
     }
-    path("login") {
-        get("") { req, resp ->
-            var model = mapOf<String, Object>()
-            VelocityTemplateEngine().render(
-                    ModelAndView(model, "templates/login.vm")
-            )
+
+    http.get("login") {
+        var model = mapOf<String, Object>()
+        VelocityTemplateEngine().render(
+                ModelAndView(model, "templates/login.vm")
+        )
+    }
+    http.post("login") {
+        var username = request.queryParams("mail")
+        var password = request.queryParams("password")
+        if(username.equals("root@root.de") && password.equals("root")) {
+            request.session(true).attribute("username", username)
         }
-        post("") { req, resp ->
-            var username = req.queryParams("mail")
-            var password = req.queryParams("password")
-            if(username.equals("root@root.de") && password.equals("root")) {
-                req.session(true).attribute("username", username)
-            }
-            resp.redirect("dashboard")
-            ""
-        }
+        response.redirect("dashboard")
+        ""
     }
 }
 
