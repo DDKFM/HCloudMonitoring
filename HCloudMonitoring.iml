@@ -54,7 +54,7 @@
     <orderEntry type="module-library">
       <library name="Maven: de.ddkfm.hcloud:hcloud-kotlin:unknown">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/hcloud-kotlin-1.0-SNAPSHOT-jar-with-dependencies.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/hcloud-kotlin-1.0-jar-with-dependencies.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
