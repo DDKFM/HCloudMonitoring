@@ -11,8 +11,6 @@ import spark.kotlin.Http
 import spark.kotlin.ignite
 import spark.Spark.*
 import spark.template.velocity.VelocityTemplateEngine
-import java.util.HashMap
-
 
 
 fun main(args : Array<String>) {
@@ -39,13 +37,25 @@ fun main(args : Array<String>) {
 
     http.get("dashboard"){
         var model = mutableMapOf<String, Any?>()
-        var hcloud = HCloudApi(token = "wPhpU8ohGpRbfT5H2sofqhIFhEkBWtXjvWxnHkQPGM2uIx7iIebehiJ8gxYZm8jUdste");
+        var hcloud = HCloudApi(token = "ltC9UBjuYH41DTqQBY7LEAoArcMuJGZmjZkoG5KM9nIWVyQF8poLPHCk4xbXz6T6");
         var servers = hcloud.getServerApi().getServers();
         model.put("servers", servers)
         model.put("names", servers.getNames())
         model.put("space", servers.getDiskSpace())
         VelocityTemplateEngine().render(
                 ModelAndView(model, "templates/dashboard.vm")
+        )
+    }
+
+    http.get("servers"){
+        var model = mutableMapOf<String, Any?>()
+        var hcloud = HCloudApi(token = "ltC9UBjuYH41DTqQBY7LEAoArcMuJGZmjZkoG5KM9nIWVyQF8poLPHCk4xbXz6T6");
+        var servers = hcloud.getServerApi().getServers();
+        model.put("servers", servers)
+        model.put("names", servers.getNames())
+        model.put("space", servers.getDiskSpace())
+        VelocityTemplateEngine().render(
+                ModelAndView(model, "templates/servers.vm")
         )
     }
 
