@@ -39,7 +39,7 @@ fun main(args : Array<String>) {
 
     http.get("dashboard"){
         var model = mutableMapOf<String, Any?>()
-        var hcloud = HCloudApi(token = "UZuR50da63MmfaC5oMcDJMJBAD9BeXPxVPZV1iGim6PIoee14G94JLnEnrUqKC19");
+        var hcloud = HCloudApi(token = "wPhpU8ohGpRbfT5H2sofqhIFhEkBWtXjvWxnHkQPGM2uIx7iIebehiJ8gxYZm8jUdste");
         var servers = hcloud.getServerApi().getServers();
         model.put("servers", servers)
         model.put("names", servers.getNames())
