@@ -14,6 +14,9 @@ import spark.template.velocity.VelocityTemplateEngine
 
 
 fun main(args : Array<String>) {
+
+    var hcloud = HCloudApi(token = "ltC9UBjuYH41DTqQBY7LEAoArcMuJGZmjZkoG5KM9nIWVyQF8poLPHCk4xbXz6T6");
+
     var http : Http = ignite()
     http.port(3000)
     http.get("/") { response.redirect("/dashboard")}
@@ -37,7 +40,6 @@ fun main(args : Array<String>) {
 
     http.get("dashboard"){
         var model = mutableMapOf<String, Any?>()
-        var hcloud = HCloudApi(token = "ltC9UBjuYH41DTqQBY7LEAoArcMuJGZmjZkoG5KM9nIWVyQF8poLPHCk4xbXz6T6");
         var servers = hcloud.getServerApi().getServers();
         model.put("servers", servers)
         model.put("names", servers.getNames())
@@ -49,7 +51,6 @@ fun main(args : Array<String>) {
 
     http.get("servers"){
         var model = mutableMapOf<String, Any?>()
-        var hcloud = HCloudApi(token = "ltC9UBjuYH41DTqQBY7LEAoArcMuJGZmjZkoG5KM9nIWVyQF8poLPHCk4xbXz6T6");
         var servers = hcloud.getServerApi().getServers();
         model.put("servers", servers)
         model.put("names", servers.getNames())
