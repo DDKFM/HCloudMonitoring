@@ -75,6 +75,7 @@ fun main(args : Array<String>) {
         response.redirect("dashboard")
         ""
     }
+    initTasks()
 }
 
 fun List<Server?>.getNames() : String {
