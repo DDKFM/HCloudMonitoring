@@ -12,6 +12,12 @@
         <kotlin.version>1.2.30</kotlin.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>my-local-repo</id>
+            <url>file://${basedir}/lib</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>com.sparkjava</groupId>
@@ -29,6 +35,20 @@
             <scope>system</scope>
             <version>1.0</version>
             <systemPath>${project.basedir}/lib/hcloud-kotlin-1.0-jar-with-dependencies.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.xenomachina</groupId>
+            <artifactId>commons</artifactId>
+            <scope>system</scope>
+            <version>0.0.5</version>
+            <systemPath>${project.basedir}/lib/xenocom-0.0.5.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.xenomachina</groupId>
+            <artifactId>kotlin-argparser</artifactId>
+            <scope>system</scope>
+            <version>2.0.4</version>
+            <systemPath>${project.basedir}/lib/kotlin-argparser-2.0.4.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -74,7 +94,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>de.ddkfm.hcloud.MainKt</mainClass>
+                            <mainClass>de.ddkfm.hcloud.monitoring.MainKt</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -91,7 +111,7 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>de.ddkfm.hcloud.MainKt</mainClass>
+                                    <mainClass>de.ddkfm.hcloud.monitoring.MainKt</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
