@@ -22,6 +22,7 @@ fun main(args : Array<String>) {
 
         var http : Http = ignite()
         http.port(port)
+        http.staticFiles.location("/public")
         http.get("/") { response.redirect("/dashboard")}
 
         path("/*") {
@@ -46,7 +47,7 @@ fun main(args : Array<String>) {
             var servers = hcloud.getServerApi().getServers();
             model.put("servers", servers)
             model.put("names", servers.getNames())
-            model.put("space", servers.getDiskSpace())
+            model.put("operatingSystems", servers.getOperatingSystems())
             VelocityTemplateEngine().render(
                     ModelAndView(model, "templates/dashboard.vm")
             )
@@ -57,7 +58,6 @@ fun main(args : Array<String>) {
             var servers = hcloud.getServerApi().getServers();
             model.put("servers", servers)
             model.put("names", servers.getNames())
-            model.put("space", servers.getDiskSpace())
             VelocityTemplateEngine().render(
                     ModelAndView(model, "templates/servers.vm")
             )
@@ -90,13 +90,14 @@ fun List<Server?>.getNames() : String {
     );
 }
 
-fun List<Server?>.getDiskSpace() : String {
-    return this.joinToString(separator = ",",
-            prefix = "[",
-            postfix = "]",
-            transform = {
-                println(it)
-                "${it?.type?.disk}"
-            }
-    );
+fun List<Server?>.getOperatingSystems() : Map<String, Int>  {
+    var map = mutableMapOf<String, Int>();
+    for(server in this) {
+        var os = server?.image?.OsFlavor;
+        if (map.containsKey(os))
+            map.put(os!!, map.get(os)!! + 1)
+        else
+            map.put(os!!, 1)
+    }
+    return map
 }

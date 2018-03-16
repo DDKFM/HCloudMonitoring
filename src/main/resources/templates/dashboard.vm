@@ -8,8 +8,14 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+    <link rel="stylesheet" href="/style.css" type="text/css"/>
     <title>Dashboard</title>
 </head>
+<style>
+    svg {
+        cursor: pointer;
+    }
+</style>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -70,32 +76,37 @@
 
     <div class="d-none d-sm-block d-sm-none d-md-block" style="padding-top: 2em">
 
-        <h3>server load</h3>
+        <h3>operating systems</h3>
 
         <canvas id="myChart" width="100%" height="25%"></canvas>
 
         <script>
             var ctx = document.getElementById("myChart").getContext('2d');
-            var servers = $names
-            var diskspace = $space
+            var servers = [];
+            var counts = [];
+
+            #foreach($entry in $operatingSystems.entrySet())
+                servers.push('$entry.key');
+                counts.push($entry.value);
+            #end
             var myChart = new Chart(ctx, {
-                type: 'bar',
+                type: 'pie',
                 data: {
                     labels: servers,
                     datasets: [{
-                        label: 'Diskspace in GB',
-                        data: diskspace,
+                        label: 'Operating Systems',
+                        data: counts,
                         backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
                             'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
                             'rgba(255, 206, 86, 0.2)',
                             'rgba(75, 192, 192, 0.2)',
                             'rgba(153, 102, 255, 0.2)',
                             'rgba(255, 159, 64, 0.2)'
                         ],
                         borderColor: [
-                            'rgba(255,99,132,1)',
                             'rgba(54, 162, 235, 1)',
+                            'rgba(255,99,132,1)',
                             'rgba(255, 206, 86, 1)',
                             'rgba(75, 192, 192, 1)',
                             'rgba(153, 102, 255, 1)',
@@ -105,13 +116,7 @@
                     }]
                 },
                 options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero:true
-                            }
-                        }]
-                    }
+
                 }
             });
         </script>
@@ -127,7 +132,23 @@
                 #set($divClass = "alert-danger")
             #end
             <div class="alert $divClass" role="alert">
-                $server.id : $server.name
+                <div style="float:left;padding-right: 5px">
+                    #set($net = $server.publicNet)
+                    <i class="fa fa-plug" title="IPv4: $net.ipv4.ip"></i>
+                    <i class="fa fa-plug" style="color: white" title="IPv6: $net.ipv6.ip"></i>
+                </div>
+                $server.name
+                <div style="float:right">
+                    #set($type = $server.type)
+                    <i class="fa fa-microchip" title="number of virtual cores"></i> $type.cores
+                    <i class="fa fa-hdd" title="size of disk space in GB"></i> $type.disk GB
+                    <i class="fa fa-hdd" title="size of memory"></i> $type.memory GB
+
+                    #set($location = $server.datacenter.location)
+                    <a target="_blank" href="https://www.google.com/maps/?q=$location.latitude,$location.longitude">
+                        <i class="fa fa-map-marker" style="color:coral" title="datacenter location"></i>
+                    </a>
+                </div>
             </div>
         #end
     </div>
