@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
     <link rel="stylesheet" href="/style.css" type="text/css"/>
-    <title>Dashboard</title>
+    <title>Monitoring Dashboard</title>
 </head>
 <style>
     svg {
@@ -131,12 +131,12 @@
             #else
                 #set($divClass = "alert-danger")
             #end
-            <div class="alert $divClass" role="alert">
-                <div style="float:left;padding-right: 5px">
-                    #set($net = $server.publicNet)
-                    <i class="fa fa-plug" title="IPv4: $net.ipv4.ip"></i>
-                    <i class="fa fa-plug" style="color: white" title="IPv6: $net.ipv6.ip"></i>
-                </div>
+            #set($net = $server.publicNet)
+            <div class="alert $divClass" role="alert" title="IPv4: $net.ipv4.ip -- IPv6: $net.ipv6.ip">
+                <!--<div style="float:left;padding-right: 5px">
+                    <i class="fa fa-plug" title="IPv4:"></i>
+                    <i class="fa fa-plug" style="color: white" title="IPv6: "></i>
+                </div> -->
                 $server.name
                 <div style="float:right">
                     #set($type = $server.type)
