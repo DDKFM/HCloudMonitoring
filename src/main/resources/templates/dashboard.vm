@@ -139,15 +139,17 @@
                 </div> -->
                 $server.name
                 <div style="float:right">
-                    #set($type = $server.type)
-                    <i class="fa fa-microchip" title="number of virtual cores"></i> $type.cores
-                    <i class="fa fa-hdd" title="size of disk space in GB"></i> $type.disk GB
-                    <i class="fa fa-hdd" title="size of memory"></i> $type.memory GB
+                    <div class="d-none d-sm-block d-sm-none d-md-block" >
+                        #set($type = $server.type)
+                        <i class="fa fa-microchip" title="number of virtual cores"></i> $type.cores
+                        <i class="fa fa-hdd" title="size of disk space in GB"></i> $type.disk GB
+                        <i class="fa fa-hdd" title="size of memory"></i> $type.memory GB
 
-                    #set($location = $server.datacenter.location)
-                    <a target="_blank" href="https://www.google.com/maps/?q=$location.latitude,$location.longitude">
-                        <i class="fa fa-map-marker" style="color:coral" title="datacenter location"></i>
-                    </a>
+                        #set($location = $server.datacenter.location)
+                        <a target="_blank" href="https://www.google.com/maps/?q=$location.latitude,$location.longitude">
+                            <i class="fa fa-map-marker" style="color:coral" title="datacenter location"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         #end
