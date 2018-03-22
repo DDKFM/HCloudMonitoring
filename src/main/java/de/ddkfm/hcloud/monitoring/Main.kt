@@ -3,10 +3,7 @@ package de.ddkfm.hcloud.monitoring
 import com.xenomachina.argparser.ArgParser
 import de.ddkfm.hcloud.HCloudApi
 import de.ddkfm.hcloud.models.Server
-import org.apache.log4j.ConsoleAppender
-import org.apache.log4j.Level
-import org.apache.log4j.LogManager
-import org.apache.log4j.PatternLayout
+import org.apache.log4j.*
 import spark.*
 import spark.kotlin.Http
 import spark.kotlin.ignite
@@ -35,49 +32,17 @@ fun main(args : Array<String>) {
                 }
             }
         }
-        val layout = PatternLayout("%r [%t] %p %c[%F:%L] %x - %m%n")
-        var appender = ConsoleAppender(layout)
-        appender.name = "ConsoleAppender"
-        appender.threshold = Level.DEBUG
-        appender.activateOptions()
-        LogManager.getLogger("HCloud-Kotlin").addAppender(appender)
+        BasicConfigurator.configure()
 
-        http.get("dashboard"){
-            var model = mutableMapOf<String, Any?>()
-            var servers = hcloud.getServerApi().getServers();
-            model.put("servers", servers)
-            model.put("names", servers.getNames())
-            model.put("operatingSystems", servers.getOperatingSystems())
-            VelocityTemplateEngine().render(
-                    ModelAndView(model, "templates/dashboard.vm")
-            )
-        }
+        var db = Databases(url = "jdbc:mysql://localhost:3306/monitoring?useSSL=true",
+                            driver= "com.mysql.jdbc.Driver",
+                            user = "root",
+                            password = "root")
+        db.createTables()
+        db.initAdmin()
 
-        http.get("servers"){
-            var model = mutableMapOf<String, Any?>()
-            var servers = hcloud.getServerApi().getServers();
-            model.put("servers", servers)
-            model.put("names", servers.getNames())
-            VelocityTemplateEngine().render(
-                    ModelAndView(model, "templates/servers.vm")
-            )
-        }
-
-        http.get("login") {
-            var model = mapOf<String, Object>()
-            VelocityTemplateEngine().render(
-                    ModelAndView(model, "templates/login.vm")
-            )
-        }
-        http.post("login") {
-            var username = request.queryParams("mail")
-            var password = request.queryParams("password")
-            if(username.equals("root@root.de") && password.equals("root")) {
-                request.session(true).attribute("username", username)
-            }
-            response.redirect("dashboard")
-            ""
-        }
+        var controller = Controller(http, hcloud, db)
+        controller.initControllers()
         initTasks()
     }
 }

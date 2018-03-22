@@ -8,4 +8,6 @@ class HCloudParser(parser : ArgParser) {
                 help = "Hetzner Cloud Token")
     val port by parser.storing("-p", "--port",
                 help = "Port for the Webinterface") { toInt() }
+    val log4j by parser.storing("-l","--logging",
+            help = "Path to log4j.properties")
 }

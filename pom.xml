@@ -17,8 +17,28 @@
             <id>my-local-repo</id>
             <url>file://${basedir}/lib</url>
         </repository>
+        <repository>
+            <id>exposed</id>
+            <name>exposed</name>
+            <url>https://dl.bintray.com/kotlin/exposed</url>
+        </repository>
     </repositories>
     <dependencies>
+        <dependency>
+            <groupId>org.jetbrains.exposed</groupId>
+            <artifactId>exposed</artifactId>
+            <version>0.10.1</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.46</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.11</version>
+        </dependency>
         <dependency>
             <groupId>com.sparkjava</groupId>
             <artifactId>spark-kotlin</artifactId>
